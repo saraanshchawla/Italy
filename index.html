@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italy · Live Trip Guide (Rome → Venice)</title>
+<style>
+  :root{
+    --paper:#FAF6EE;--ink:#272320;--muted:#6E665A;--line:#E7DDCC;
+    --sea:#0F6A70;--sea-2:#0A4D52;--coral:#CF6440;--olive:#5E7544;--gold:#B6841F;--rose:#B23A66;
+    --card:#FFFFFF;--shadow:0 1px 2px rgba(39,35,32,.05),0 10px 30px rgba(39,35,32,.06);--r:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .serif{font-family:"Iowan Old Style","Palatino Linotype",Georgia,ui-serif,serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:22px 16px 72px}
+  header{position:relative;overflow:hidden;background:linear-gradient(135deg,#0A4D52,#0F6A70 55%,#15808a);color:#fff;padding:30px 0 0;border-bottom:4px solid var(--coral)}
+  header .deco{position:absolute;inset:0;opacity:.18}
+  .hd{position:relative;max-width:1040px;margin:0 auto;padding:0 16px 22px}
+  .kick{font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;opacity:.85;margin:0}
+  h1.title{font-size:clamp(28px,5.4vw,44px);margin:6px 0 4px;font-weight:600;letter-spacing:-.015em}
+  .sub{opacity:.93;margin:0;font-size:15px;max-width:56ch}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);padding:6px 11px;border-radius:999px;font-size:12.5px;backdrop-filter:blur(4px)}
+  .chip b{font-weight:600}
+  .hbtns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .hbtn{background:#fff;color:var(--sea-2);border:none;font:inherit;font-weight:700;font-size:13.5px;padding:10px 16px;border-radius:999px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+  .hbtn.ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35)}
+  .ribbon{display:flex;gap:0;margin-top:18px;overflow-x:auto;padding-bottom:6px}
+  .leg{flex:1;min-width:128px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px 12px;margin-right:8px}
+  .leg:last-child{margin-right:0}
+  .leg .n{font-size:11px;opacity:.78}
+  .leg .p{font-weight:600;font-size:14px;margin-top:2px}
+  .leg .d{font-size:11.5px;opacity:.82;margin-top:2px}
+  .leg .tg{font-size:10px;margin-top:6px;display:inline-block;padding:2px 7px;border-radius:999px;font-weight:600}
+  .tg.pts{background:rgba(180,219,170,.32);color:#e4f3dd}
+  .tg.cash{background:rgba(240,180,150,.30);color:#ffe3d4}
+  nav.tabs{position:sticky;top:0;z-index:30;background:rgba(250,246,238,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .tabrow{max-width:1040px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:9px 12px}
+  .tab{flex:0 0 auto;border:none;background:transparent;color:var(--muted);font:inherit;font-size:14px;font-weight:600;padding:9px 13px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:.15s}
+  .tab:hover{color:var(--ink);background:rgba(15,106,112,.08)}
+  .tab[aria-selected="true"]{background:var(--sea);color:#fff}
+  .tab.bday[aria-selected="true"]{background:var(--rose)}
+  .tab.book[aria-selected="true"]{background:var(--gold)}
+  .panel{display:none;animation:fade .28s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin:30px 0 12px;font-weight:700}
+  h2.sec:first-child{margin-top:6px}
+  h3{font-size:19px;margin:0 0 6px;font-weight:600}
+  p{margin:0 0 12px}
+  a{color:var(--sea)}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:680px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;box-shadow:var(--shadow)}
+  .card .lbl{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .card .big{font-size:23px;font-weight:600;margin-top:3px;letter-spacing:-.01em}
+  .card .note{font-size:13px;color:var(--muted);margin-top:4px}
+  /* Day quick-nav */
+  .daynav{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;margin-bottom:6px}
+  .dn-chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-size:12.5px;font-weight:700;padding:7px 12px;border-radius:999px;cursor:pointer}
+  .dn-chip.today{border-color:var(--coral);color:var(--coral)}
+  /* Day cards */
+  .day{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);margin-bottom:18px;scroll-margin-top:70px}
+  .day.today{border:2px solid var(--coral);box-shadow:0 0 0 4px rgba(207,100,64,.12),var(--shadow)}
+  .heroimg{position:relative;height:150px;overflow:hidden;background:linear-gradient(135deg,var(--sea-2),var(--sea))}
+  .heroimg img{width:100%;height:100%;object-fit:cover;display:block}
+  .heroimg .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 14px 8px;background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;font-size:12.5px;font-weight:600;letter-spacing:.02em}
+  .todaybadge{position:absolute;top:10px;left:10px;background:var(--coral);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;letter-spacing:.08em;display:none}
+  .day.today .todaybadge{display:inline-block}
+  .day .top{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line)}
+  .daynum{flex:0 0 auto;min-width:46px;height:46px;padding:0 8px;border-radius:12px;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+  .daynum.b{background:var(--rose)}
+  .daynum .dn{font-size:9px;opacity:.85;letter-spacing:.06em}
+  .daynum .dd{font-size:17px;font-weight:700}
+  .day .ttl{flex:1}
+  .day .ttl .where{font-weight:600;font-size:16px}
+  .day .ttl .date{font-size:12.5px;color:var(--muted)}
+  .tag{flex:0 0 auto;font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px}
+  .tag.pts{background:#EAF3E7;color:var(--olive)}
+  .tag.cash{background:#FCEEE7;color:var(--coral)}
+  .tag.move{background:#E7F0F1;color:var(--sea)}
+  .tag.bd{background:#F7E1EA;color:var(--rose)}
+  .day .body{padding:14px 16px}
+  .day ul{margin:0;padding-left:18px}
+  .day li{margin:5px 0;font-size:14.5px}
+  .bk{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;margin-left:4px;vertical-align:middle}
+  .bk.done{background:#E4F0DD;color:#3f6b2a}.bk.todo{background:#FBEAD2;color:#9a6a13}
+  .meal{font-size:13px;color:var(--muted);margin-top:10px}
+  .meal b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line)}
+  th{background:rgba(15,106,112,.06);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  tr:last-child td{border-bottom:none}
+  td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+  .total td{font-weight:700;background:rgba(182,132,31,.08)}
+  .pin{display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:9px;text-decoration:none;color:var(--ink)}
+  .pin:hover{border-color:var(--sea);box-shadow:var(--shadow)}
+  .pin .ic{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .pin.bd .ic{background:var(--rose)}
+  .pin .meta{flex:1;min-width:0}.pin .pn{font-weight:600;font-size:14.5px}.pin .ps{font-size:12.5px;color:var(--muted)}
+  .pin .go{flex:0 0 auto;font-size:12px;color:var(--sea);font-weight:600}
+  .callout{border-left:3px solid var(--gold);background:#FBF3E1;border-radius:0 12px 12px 0;padding:12px 15px;margin:14px 0;font-size:14px}
+  .callout.sea{border-color:var(--sea);background:#E9F3F3}
+  .callout.coral{border-color:var(--coral);background:#FCEEE7}
+  .callout.rose{border-color:var(--rose);background:#F9E7EE}
+  .callout b{font-weight:700}
+  .step{display:flex;gap:12px;margin-bottom:12px}
+  .step .num{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sea);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  .step .txt{flex:1;font-size:14px;padding-top:2px}
+  ul.tight{margin:6px 0 0;padding-left:18px}
+  ul.tight li{margin:5px 0;font-size:14px}
+  .dishes span{display:inline-block;background:#E9F3F3;color:var(--sea-2);border:1px solid #cfe6e6;border-radius:999px;padding:4px 10px;font-size:12.5px;margin:0 6px 6px 0}
+  .avoid span{background:#FCEEE7;color:var(--coral);border-color:#f1d6cb}
+  .progwrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;box-shadow:var(--shadow);margin-bottom:8px}
+  .progbar{height:12px;border-radius:999px;background:#EFE7D8;overflow:hidden;margin-top:8px}
+  .progfill{height:100%;background:linear-gradient(90deg,var(--olive),#7fa256);width:0;transition:width .6s ease}
+  .filters{display:flex;gap:8px;margin:14px 0}
+  .fbtn{border:1px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;cursor:pointer}
+  .fbtn[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .bgroup h3{font-size:15px;margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+  .bgroup h3 .dchip{font-size:11px;font-weight:700;color:#fff;background:var(--sea);padding:2px 8px;border-radius:6px}
+  .bitem{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+  .bitem .stat{flex:0 0 auto;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-top:1px;white-space:nowrap}
+  .stat.done{background:#E4F0DD;color:#3f6b2a}.stat.todo{background:#FBEAD2;color:#9a6a13}.stat.urgent{background:#FAD9D9;color:#9a1f1f}
+  .bitem .bmeta{flex:1;min-width:0}.bitem .bt{font-weight:600;font-size:14.5px}.bitem .bd2{font-size:13px;color:var(--muted);margin-top:2px}
+  .bitem .blink{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:600}
+  footer{margin-top:38px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  .hint{font-size:12.5px;color:var(--muted);margin:-4px 0 14px}
+  .fab{position:fixed;right:16px;bottom:16px;z-index:40;background:var(--coral);color:#fff;border:none;font:inherit;font-weight:800;font-size:13px;padding:12px 18px;border-radius:999px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25);display:none}
+  /* ---------- PRINT / PDF ---------- */
+  @media print{
+    nav.tabs,.hbtns,.filters,.fab,.daynav,header .deco{display:none !important}
+    body{background:#fff}
+    header{background:#0F6A70 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel{display:block !important;page-break-before:always}
+    .panel#overview{page-break-before:avoid}
+    .panel::before{content:attr(data-title);display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#CF6440;font-weight:800;margin:0 0 12px}
+    .day,.card,.bitem,.pin,table{box-shadow:none;page-break-inside:avoid}
+    .heroimg{height:110px}
+    a{color:inherit;text-decoration:none}
+    .wrap{padding-bottom:10px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <svg class="deco" viewBox="0 0 1040 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="1.2"><circle cx="880" cy="40" r="120"/><circle cx="960" cy="150" r="80"/><path d="M0 180 Q260 120 520 180 T1040 170"/></g></svg>
+  <div class="hd">
+    <p class="kick">Live Trip Guide · September 2026</p>
+    <h1 class="title serif">Italy — Rome to Venice</h1>
+    <p class="sub">Rome · a Tuscan thermal-spa base (Florence, Pisa &amp; Lucca) · Milan · Venice — 10 nights, all trains &amp; boats.</p>
+    <div class="chips">
+      <span class="chip">✈️ In <b>Rome Sep 5, 12:15</b> · TS308</span>
+      <span class="chip">✈️ Out <b>Venice Sep 15, 13:25</b> · TS307</span>
+      <span class="chip">♨️ <b>Spa Sep 8–11</b></span>
+      <span class="chip">🎂 <b>Birthday Sep 14</b></span>
+    </div>
+    <div class="hbtns">
+      <button class="hbtn" onclick="exportPDF()">⬇ Export itinerary as PDF</button>
+      <button class="hbtn ghost" id="todayBtn" onclick="goToday()" style="display:none">📍 Jump to today</button>
+    </div>
+    <div class="ribbon">
+      <div class="leg"><div class="n">Sep 5–7</div><div class="p">Rome</div><div class="d">history · Vatican</div><span class="tg cash">cash ×3</span></div>
+      <div class="leg"><div class="n">Sep 8–10</div><div class="p">Tuscany spa</div><div class="d">Florence · Pisa · Lucca</div><span class="tg pts">points ×3 ✓</span></div>
+      <div class="leg"><div class="n">Sep 11–12</div><div class="p">Milan</div><div class="d">Duomo · shopping</div><span class="tg pts">points ×2</span></div>
+      <div class="leg"><div class="n">Sep 13–14</div><div class="p">Venice · Mestre</div><div class="d">islands · birthday</div><span class="tg pts">points ×2</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-t="overview">Overview</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="itinerary">Itinerary</button>
+    <button class="tab book" role="tab" aria-selected="false" data-t="bookings">✓ Bookings</button>
+    <button class="tab bday" role="tab" aria-selected="false" data-t="venice">🎂 Venice Day</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="map">Map</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="stay">Stay</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="food">Food</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="travel">Travel</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="budget">Budget</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- OVERVIEW -->
+  <section class="panel active" id="overview" data-title="Overview">
+    <h2 class="sec">Your trip at a glance</h2>
+    <p>South-to-north, matching your booked flights — into <b>Rome</b>, out of <b>Venice</b>. Rome for ancient history + the Vatican; a <b>Tuscan thermal-spa base at Grotta Giusti</b> with day trips to <b>Florence, Pisa and Lucca</b>; <b>Milan</b> for the Duomo, the Last Supper and shopping; and <b>Venice from Four Points Mestre</b> — with the <b>Murano + Burano island day on the birthday (Sep 14)</b>.</p>
+    <div class="grid g3">
+      <div class="card"><div class="lbl">Shape</div><div class="big">Open-jaw</div><div class="note">Rome in · Venice out · 10 nights</div></div>
+      <div class="card"><div class="lbl">On points</div><div class="big">7 nights</div><div class="note">Spa 3 (✓152k) + Milan 2 + Venice 2</div></div>
+      <div class="card"><div class="lbl">All-in budget</div><div class="big">~$5.8–6.3k</div><div class="note">CAD, two · Venice back on points</div></div>
+    </div>
+    <h2 class="sec">On-the-go</h2>
+    <div class="callout sea"><b>During the trip</b> this page highlights <b>today's plan</b> automatically (look for the orange "TODAY" card and the 📍 button). Every place name in the Map tab opens straight into Google Maps for directions. Use <b>⬇ Export PDF</b> anytime for an offline copy — print it or save to your phone.</div>
+    <h2 class="sec">Wins built in</h2>
+    <ul class="tight">
+      <li><b>Free in Rome Sun Sep 6:</b> Colosseum, Forum, Palatine, Pantheon, Capitoline (first-Sunday). St. Peter's always free.</li>
+      <li><b>Europe's largest thermal grotto</b> at your Tuscany hotel — Verdi's "eighth wonder of the world."</li>
+      <li><b>Four Points Mestre:</b> ~12-min train to Venice island, ~15 min to VCE airport on departure day — the smoothest exit possible.</li>
+    </ul>
+  </section>
+
+  <!-- ITINERARY -->
+  <section class="panel" id="itinerary" data-title="Day-by-day itinerary">
+    <h2 class="sec">Day by day</h2>
+    <div class="daynav" id="daynav"></div>
+    <p class="hint">Tags: <span class="tag pts">points</span> · <span class="tag cash">cash</span> · <span class="tag move">travel</span> · <span class="tag bd">birthday</span> · flags <span class="bk done">booked</span> / <span class="bk todo">to book</span></p>
+
+    <!-- D5 -->
+    <div class="day" data-date="2026-09-05" id="d5">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZMJtk-QX_Yn9SuQBGxMrQ-ntYrwhyWChJlaq1DATvP1jdHq0UGk5_YvRCI39U3bPWFVc5PqFq1uY4KnpS-ShE6Ut34gUufJx_3mTI5kPB-12M47zNMmRjCR5pDnDOF3opMa1efN1flgsHkKkA=s4800-w800-h600" alt="Colosseum, Rome" loading="lazy" onerror="this.remove()"><span class="cap">Colosseum, Rome</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum"><span class="dn">SAT</span><span class="dd">5</span></div><div class="ttl"><div class="where">Arrive Rome (12:15)</div><div class="date">Sep 5 · airport → city · evening tour</div></div><span class="tag cash">cash</span></div>
+      <div class="body"><ul>
+        <li>Land FCO 12:15; <b>Leonardo Express</b> → Termini (32 min); hotel ~3 PM.</li>
+        <li><b>Evening:</b> Colosseum &amp; Rome highlights walking tour <span class="bk done">booked</span> (Airbnb experience).</li>
+      </ul></div>
+    </div>
+
+    <!-- D6 -->
+    <div class="day" data-date="2026-09-06" id="d6">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZOGjalkJPYVza2ASG0xg9ZzK-z35ne2zsPmxGbtlLyrbB-fS6zATm3_HHCHGiKZSlXuDE48hVKU-2Ks92Vsb86SursigwxKXCq2h1k1JN9eppYm1a4c6jpw9L3MPHZokuxVC3aPJ6n8ClPnfQ=s4800-w800-h600" alt="St. Peter's, Rome" loading="lazy" onerror="this.remove()"><span class="cap">Rome — the free-Sunday classics</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum"><span class="dn">SUN</span><span class="dd">6</span></div><div class="ttl"><div class="where">Rome — FREE museum day</div><div class="date">Sep 6 · first-Sunday</div></div><span class="tag cash">cash</span></div>
+      <div class="body"><ul>
+        <li><b>07:30:</b> Colosseum interior (free today — first-come), then Forum + Palatine.</li>
+        <li>Afternoon (free): Capitoline Museums, Pantheon, Trevi, Spanish Steps. <b>Eat:</b> Trastevere <span class="bk todo">reserve</span>.</li>
+      </ul></div>
+    </div>
+
+    <!-- D7 Vatican -->
+    <div class="day" data-date="2026-09-07" id="d7">
+      <div class="top"><div class="daynum"><span class="dn">MON</span><span class="dd">7</span></div><div class="ttl"><div class="where">Vatican City day</div><div class="date">Sep 7 · guided tours</div></div><span class="tag cash">cash</span></div>
+      <div class="body"><ul>
+        <li><b>Morning:</b> Vatican <b>Gardens + Museums + Sistine Chapel</b> guided tour <span class="bk todo">book (official)</span>. <i>Garden tours run mornings only.</i></li>
+        <li><b>Lunch</b> near St Peter's Square.</li>
+        <li><b>Afternoon:</b> St. Peter's Basilica + <b>dome climb</b> <span class="bk todo">book</span> (open into the evening).</li>
+      </ul></div>
+    </div>
+
+    <!-- D8 Florence + spa -->
+    <div class="day" data-date="2026-09-08" id="d8">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZMH7T6tRBUV1ZNVeATuS14zTFZttkbVKamYrXLrf3CoD-e2SYbXZwT3rZEHqvl8TTE4R6y_dVrT7SLzNPeyUyo9De2QH6P_SK66HHsWZXKM1DSc5M-nKTT45ad-ehkEdOevBPNlvyTZsbnNICM=s4800-w600-h600" alt="Florence Duomo" loading="lazy" onerror="this.remove()"><span class="cap">Florence — Duomo di Santa Maria del Fiore</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum"><span class="dn">TUE</span><span class="dd">8</span></div><div class="ttl"><div class="where">Florence → spa check-in</div><div class="date">Sep 8 · ~1h30 + ~50 min</div></div><span class="tag pts">points ✓</span></div>
+      <div class="body"><ul>
+        <li>Morning Frecciarossa Rome → Florence <span class="bk todo">book train</span>. Store bags at S.M.N. station.</li>
+        <li>Afternoon in <b>Florence:</b> Duomo &amp; Baptistery, Ponte Vecchio, San Lorenzo leather market.</li>
+        <li>Evening: regional train → <b>Montecatini Terme</b> (~50 min) → taxi/shuttle to <b>Grotta Giusti</b> <span class="bk done">booked · 152k pts</span>. First soak in the thermal pool.</li>
+      </ul><div class="meal"><b>Eat:</b> Il Vegetariano in Florence, or Il Poeta at the resort.</div></div>
+    </div>
+
+    <!-- D9 Pisa + Lucca -->
+    <div class="day" data-date="2026-09-09" id="d9">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZPZvP66nMUK2tmlnRXRr5vxOEBkkfod0xWvj0r0ZwSEoTQSGlieYmcN2OVJRIU0IXmu672YHWNsv6U-Bs5t6UJ_it8DNPufllIcdYqBJRrF1xn-qJrt7nBzLaPAqrtCHVxPGcZUCYiXDsmI=s4800-w800-h600" alt="Leaning Tower of Pisa" loading="lazy" onerror="this.remove()"><span class="cap">Pisa — Piazza dei Miracoli</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum"><span class="dn">WED</span><span class="dd">9</span></div><div class="ttl"><div class="where">Pisa + Lucca day trip</div><div class="date">Sep 9 · trains, no car</div></div><span class="tag pts">points</span></div>
+      <div class="body"><ul>
+        <li><b>Morning Pisa</b> (~1h by train): Leaning Tower + Piazza dei Miracoli. Climb? <span class="bk todo">book official</span>.</li>
+        <li><b>Afternoon Lucca</b> (~30 min): bike the Renaissance walls, Piazza dell'Anfiteatro, Guinigi Tower.</li>
+        <li>Evening: back to the resort — grotto + pool.</li>
+      </ul><div class="meal"><b>Eat:</b> lunch in Lucca.</div></div>
+    </div>
+
+    <!-- D10 Spa day -->
+    <div class="day" data-date="2026-09-10" id="d10">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZMTxpg0WNGEgv5FgdKZSEwa2SL6U8BFt9FBKtv2SAyCIlgsSWJJOcho7c3_WRvVFlottBAJgkgabUbAkokKa7NReSC0pTP4m_XI0ZPWOy6l1VTBMvDzms2ydKiQfT3Lj_XIQ3MGWtY_nYV6VYxMusizoA=s4800-w569-h320" alt="Grotta Giusti Thermal Spa Resort" loading="lazy" onerror="this.remove()"><span class="cap">Grotta Giusti — your thermal-spa base</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum"><span class="dn">THU</span><span class="dd">10</span></div><div class="ttl"><div class="where">Spa &amp; relax day</div><div class="date">Sep 10 · Grotta Giusti</div></div><span class="tag pts">points</span></div>
+      <div class="body"><ul>
+        <li><b>The thermal grotto:</b> Europe's largest — Paradiso / Purgatorio / Inferno zones (28–34°C) + the underground "Limbo" lake; 750-sqm outdoor thermal pool. <span class="bk todo">reserve grotto + treatments</span>.</li>
+        <li>Optional half-day: <b>Montecatini Alto</b> by funicular, or Florence for the <b>Uffizi / Accademia</b> <span class="bk todo">book</span>.</li>
+      </ul><div class="meal"><b>Eat:</b> pool bar lunch; Il Poeta dinner.</div></div>
+    </div>
+
+    <!-- D11 Milan -->
+    <div class="day" data-date="2026-09-11" id="d11">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZOf-yX55N2SenP3lo963EtyHnBkaazU58EiPLVzxYYJ3MRoTZTzBwFRu6Rxxdoyai5BTP8dEnKCewe659-BlNJx0PlDeIQ6UxJQxpPFXWs-NFoHToLvKmIldna25HZN0qszf9ipBeF95QLniHiXzIqjxA=s4800-w800-h600" alt="Duomo di Milano" loading="lazy" onerror="this.remove()"><span class="cap">Milan — the Duomo</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum"><span class="dn">FRI</span><span class="dd">11</span></div><div class="ttl"><div class="where">Train to Milan</div><div class="date">Sep 11 · ~3h via Florence</div></div><span class="tag pts">points</span></div>
+      <div class="body"><ul>
+        <li>Check out; Montecatini → Florence → <b>Milan</b> <span class="bk todo">book train</span>. Check into <b>AC Hotel Milano</b> <span class="bk todo">book (points)</span>.</li>
+        <li>Afternoon: <b>Duomo</b> + rooftop terraces <span class="bk todo">book</span>, <b>Galleria Vittorio Emanuele II</b>, Piazza della Scala.</li>
+        <li>Evening: aperitivo in Brera.</li>
+      </ul><div class="meal"><b>Eat:</b> risotto alla milanese (veg), pizza.</div></div>
+    </div>
+
+    <!-- D12 Milan full -->
+    <div class="day" data-date="2026-09-12" id="d12">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZNRUSZFUqlT0vfveoYWfHWRmJ3x8s6eeGVmUsesY3H02UGEwTarqlEdOReVFr_XGx2430pBlCdbNxihh3t-789qG7YOkobfq8-A3wI72ML1-fA74etqp0RBht3EhncfJy_VvB8GlU_piGQ1=s4800-w800-h600" alt="The Last Supper museum, Milan" loading="lazy" onerror="this.remove()"><span class="cap">Santa Maria delle Grazie — the Last Supper</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum"><span class="dn">SAT</span><span class="dd">12</span></div><div class="ttl"><div class="where">Milan — full day &amp; shopping</div><div class="date">Sep 12</div></div><span class="tag pts">points</span></div>
+      <div class="body"><ul>
+        <li><b>The Last Supper</b> <span class="bk todo">book NOW — sells out</span> (timed 15-min slot; closed Mondays — Saturday is perfect).</li>
+        <li><b>Sforza Castle</b> + Sempione Park, <b>Brera</b>, and the <b>Quadrilatero della Moda</b> (Via Montenapoleone) for shopping.</li>
+        <li>Evening: the <b>Navigli</b> canals for dinner.</li>
+      </ul></div>
+    </div>
+
+    <!-- D13 Venice -->
+    <div class="day" data-date="2026-09-13" id="d13">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZOa98XxOLQdK9THzZvWVwEQEG9pGVZX8Gozc0ZQQyHuSprQAHcQGhB5nAwCqsJa_ZdILOnCgDJ2us_Qfnp5dPjzLvS0tpis55wh72YoEJXy7mRqXSaBVg_-QddZpkWAX9V703hXP8E-76uVOg=s4800-w800-h600" alt="Piazza San Marco, Venice" loading="lazy" onerror="this.remove()"><span class="cap">Venice — Piazza San Marco</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum"><span class="dn">SUN</span><span class="dd">13</span></div><div class="ttl"><div class="where">Train to Venice + the city</div><div class="date">Sep 13 · ~2h13</div></div><span class="tag pts">points</span></div>
+      <div class="body"><ul>
+        <li>Frecciarossa Milan → <b>Venezia Mestre</b> <span class="bk todo">book train</span>. Check into <b>Four Points Mestre</b> <span class="bk todo">book (points)</span>; drop bags; 12-min train to <b>Venezia S. Lucia</b>.</li>
+        <li><b>Venice proper:</b> St Mark's Basilica <span class="bk todo">timed entry</span> + Doge's Palace <span class="bk todo">book</span>, Rialto, Grand Canal by vaporetto, sunset.</li>
+      </ul><div class="meal"><b>Eat:</b> cicchetti crawl (veg/cheese ones). Last trains back to Mestre run late — no rush.</div></div>
+    </div>
+
+    <!-- D14 birthday -->
+    <div class="day" data-date="2026-09-14" id="d14">
+      <div class="heroimg"><img src="https://lh3.googleusercontent.com/place-photos/AJRVUZMVVDonYCrqrFzkllIib_c07nBJ-fnGr2HHc-WiS3M037lkxuRS4O9dblvpQCZjidXkFkeGiWqB0A6peyJvKOM27bBYKCWnsstY2-XDibU4DLPd4lC6jWvs6S-AWVFAV25u0kJYEGrcBsQOrvQ=s4800-w800-h600" alt="Burano's rainbow houses" loading="lazy" onerror="this.remove()"><span class="cap">Burano — the rainbow island 🎂</span><span class="todaybadge">TODAY</span></div>
+      <div class="top"><div class="daynum b"><span class="dn">MON</span><span class="dd">14</span></div><div class="ttl"><div class="where">🎂 Murano + Burano + birthday</div><div class="date">Sep 14 · islands by waterbus</div></div><span class="tag bd">birthday</span></div>
+      <div class="body"><ul>
+        <li>Early train from Mestre to the island (aim to be at <b>Fondamente Nove by ~9 AM</b>).</li>
+        <li><b>Day:</b> waterbus to <b>Murano (glass)</b> + <b>Burano (lace)</b> — step-by-step in the <b>🎂 Venice Day</b> tab.</li>
+        <li><b>Evening:</b> sunset + birthday dinner at <b>La Zucca</b> <span class="bk todo">reserve now</span>; late train back to Mestre.</li>
+      </ul></div>
+    </div>
+
+    <!-- D15 -->
+    <div class="day" data-date="2026-09-15" id="d15">
+      <div class="top"><div class="daynum"><span class="dn">TUE</span><span class="dd">15</span></div><div class="ttl"><div class="where">Depart Venice (13:25)</div><div class="date">Sep 15 · TS307 → Toronto 16:45</div></div><span class="tag move">fly</span></div>
+      <div class="body"><ul><li>Relaxed morning — <b>VCE is ~15 min from Mestre</b> (bus/taxi). Be at the airport by ~11:00. Fly home.</li></ul></div>
+    </div>
+  </section>
+
+  <!-- BOOKINGS -->
+  <section class="panel" id="bookings" data-title="Booking tracker">
+    <div class="progwrap">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h3 style="margin:0">Booking tracker</h3><span id="progtext" style="font-weight:700;color:var(--olive)"></span></div>
+      <div class="progbar"><div class="progfill" id="progfill"></div></div>
+      <p class="hint" style="margin:10px 0 0">Tell me as you book and I'll flip items to <span class="stat done" style="font-size:10px">Booked</span>. <span class="stat urgent" style="font-size:10px">Urgent</span> = time-sensitive.</p>
+    </div>
+    <div class="filters">
+      <button class="fbtn" aria-pressed="true" data-f="all">All</button>
+      <button class="fbtn" aria-pressed="false" data-f="todo">To book</button>
+      <button class="fbtn" aria-pressed="false" data-f="done">Booked</button>
+    </div>
+
+    <div class="bgroup">
+      <h3>Before you go <span class="dchip">logistics</span></h3>
+      <div class="bitem" data-s="done"><span class="stat done">Booked</span><div class="bmeta"><div class="bt">Flights — Air Transat</div><div class="bd2">YYZ→FCO Sep 4 21:40 (TS308) · VCE→YYZ Sep 15 13:25 (TS307). CAD $2,205.68 for two.</div></div></div>
+      <div class="bitem" data-s="done"><span class="stat done">Booked</span><div class="bmeta"><div class="bt">Tuscany — Grotta Giusti Thermal Spa (Sep 8–11)</div><div class="bd2">Autograph Collection · 152,000 Bonvoy points.</div></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Milan — AC Hotel Milano (Sep 11–13, points)</div><a class="blink" target="_blank" href="https://www.marriott.com">Marriott / Bonvoy ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Venice — Four Points by Sheraton Venice Mestre (Sep 13–15, points)</div><div class="bd2">~12-min train to the island; ~15 min to VCE. Confirm your remaining Bonvoy balance covers both city stays.</div><a class="blink" target="_blank" href="https://www.marriott.com">Marriott / Bonvoy ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Rome — central B&amp;B (Sep 5–8, cash)</div><div class="bd2">Prati / centro; ~€95–150/night.</div><a class="blink" target="_blank" href="https://www.booking.com">Find a B&amp;B ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Trains ×3 — Rome→Florence · Tuscany→Milan · Milan→Venezia Mestre</div><div class="bd2">Cheapest ~60–90 days out.</div><a class="blink" target="_blank" href="https://www.trenitalia.com">Trenitalia ›</a> &nbsp;<a class="blink" target="_blank" href="https://www.italotreno.com">Italo ›</a></div></div>
+    </div>
+
+    <div class="bgroup">
+      <h3><span class="dchip">Sep 5</span> Rome — arrival</h3>
+      <div class="bitem" data-s="done"><span class="stat done">Booked</span><div class="bmeta"><div class="bt">Colosseum &amp; Rome highlights — evening walking tour</div><a class="blink" target="_blank" href="https://www.airbnb.com/experiences/1684663">View experience ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">On arrival</span><div class="bmeta"><div class="bt">Leonardo Express (FCO → Termini)</div><div class="bd2">€14 pp.</div><a class="blink" target="_blank" href="https://www.trenitalia.com">Trenitalia ›</a></div></div>
+    </div>
+
+    <div class="bgroup">
+      <h3><span class="dchip">Sep 7</span> Vatican City</h3>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Vatican Gardens + Museums + Sistine — guided (morning)</div><a class="blink" target="_blank" href="https://tickets.museivaticani.va">tickets.museivaticani.va ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">St. Peter's Basilica + dome climb — afternoon</div><a class="blink" target="_blank" href="https://www.basilicasanpietro.va">basilicasanpietro.va ›</a></div></div>
+    </div>
+
+    <div class="bgroup">
+      <h3><span class="dchip">Sep 8–10</span> Tuscany spa · Florence · Pisa · Lucca</h3>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Thermal grotto session + spa treatments</div><a class="blink" target="_blank" href="https://www.grottagiustispa.com">grottagiustispa.com ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Uffizi or Accademia — timed entry</div><a class="blink" target="_blank" href="https://www.uffizi.it">uffizi.it ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">Optional</span><div class="bmeta"><div class="bt">Pisa — Leaning Tower climb</div><a class="blink" target="_blank" href="https://www.opapisa.it">opapisa.it ›</a></div></div>
+    </div>
+
+    <div class="bgroup">
+      <h3><span class="dchip">Sep 11–12</span> Milan</h3>
+      <div class="bitem" data-s="todo"><span class="stat urgent">Urgent</span><div class="bmeta"><div class="bt">The Last Supper (Cenacolo Vinciano)</div><div class="bd2">Mandatory pre-booking; September slots are in the June release — book now, or a guided tour if sold out.</div><a class="blink" target="_blank" href="https://cenacolovinciano.org">cenacolovinciano.org ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Duomo + rooftop terraces</div><a class="blink" target="_blank" href="https://www.duomomilano.it">duomomilano.it ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">Optional</span><div class="bmeta"><div class="bt">Sforza Castle museums</div><a class="blink" target="_blank" href="https://www.milanocastello.it">milanocastello.it ›</a></div></div>
+    </div>
+
+    <div class="bgroup">
+      <h3><span class="dchip">Sep 13</span> Venice — the city</h3>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">St Mark's Basilica — timed entry</div><a class="blink" target="_blank" href="https://www.basilicasanmarco.it">basilicasanmarco.it ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">To book</span><div class="bmeta"><div class="bt">Doge's Palace — timed ticket</div><a class="blink" target="_blank" href="https://palazzoducale.visitmuve.it">palazzoducale.visitmuve.it ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">On arrival</span><div class="bmeta"><div class="bt">Vaporetto pass + Mestre↔Venice train tickets</div><div class="bd2">Regional train ~€1.55 pp each way; validate before boarding.</div><a class="blink" target="_blank" href="https://www.veneziaunica.it">veneziaunica.it ›</a></div></div>
+    </div>
+
+    <div class="bgroup">
+      <h3><span class="dchip">Sep 14</span> 🎂 Murano · Burano · birthday</h3>
+      <div class="bitem" data-s="todo"><span class="stat todo">Reserve now</span><div class="bmeta"><div class="bt">Birthday dinner — La Zucca</div><div class="bd2">Ask for the canal table + a birthday note.</div><a class="blink" target="_blank" href="http://www.lazucca.it">lazucca.it ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">Optional</span><div class="bmeta"><div class="bt">Murano glassblowing demo / experience</div><a class="blink" target="_blank" href="https://wavemuranoglass.com">Wave Murano Glass ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">On arrival</span><div class="bmeta"><div class="bt">Vaporetto 24-hour pass (€25)</div><a class="blink" target="_blank" href="https://www.veneziaunica.it">veneziaunica.it ›</a></div></div>
+      <div class="bitem" data-s="todo"><span class="stat todo">Optional</span><div class="bmeta"><div class="bt">Sunset — Skyline Rooftop Bar or sunset gondola</div></div></div>
+    </div>
+
+    <div class="bgroup">
+      <h3><span class="dchip">Sep 15</span> Departure</h3>
+      <div class="bitem" data-s="todo"><span class="stat todo">Arrange</span><div class="bmeta"><div class="bt">Mestre → VCE transfer (~15 min)</div><div class="bd2">ATVO/ACTV airport bus from Mestre station, or taxi (~€30–35).</div><a class="blink" target="_blank" href="https://www.atvo.it">atvo.it ›</a></div></div>
+    </div>
+  </section>
+
+  <!-- VENICE DAY -->
+  <section class="panel" id="venice" data-title="Birthday — Murano, Burano & the evening">
+    <h2 class="sec" style="color:var(--rose)">🎂 Sep 14 — Murano, Burano &amp; the birthday</h2>
+    <div class="callout rose"><b>Shape of the day:</b> early train from Mestre to the island, islands through the afternoon, back ~5:30 PM, sunset + dinner, late train back. All independent, by waterbus.</div>
+    <h3>Getting there &amp; the ticket</h3>
+    <div class="step"><div class="num">1</div><div class="txt">Train Mestre → <b>Venezia S. Lucia</b> (12 min), then walk (~15 min) or Line 4.1/5.2 to <b>Fondamente Nove</b> — the island launch point.</div></div>
+    <div class="step"><div class="num">2</div><div class="txt">Buy a <b>24-hour vaporetto pass (€25)</b> — cheaper than ~4 singles. <b>Validate at the reader every boarding.</b></div></div>
+    <h3>① Murano — glassmaking (~2 hrs)</h3>
+    <div class="step"><div class="num">3</div><div class="txt"><b>Line 12</b> (or 4.1) → <b>Murano Colonna</b> (~10–15 min).</div></div>
+    <div class="step"><div class="num">4</div><div class="txt">Walk <b>Fondamenta dei Vetrai</b> for a <b>live glassblowing demo</b> (working furnace like <b>Wave Murano Glass</b>). Optional: <b>Museo del Vetro</b>, <b>Basilica dei Santi Maria e Donato</b>. Look for the <b>"Vetro Artistico Murano"</b> label when buying. Walk to <b>Murano Faro</b>.</div></div>
+    <h3>② Burano — lacemaking (~2 hrs)</h3>
+    <div class="step"><div class="num">5</div><div class="txt"><b>Line 12</b> from <b>Murano Faro</b> → <b>Burano</b> (~30–40 min via Mazzorbo).</div></div>
+    <div class="step"><div class="num">6</div><div class="txt"><b>Piazza Galuppi</b>: the <b>Museo del Merletto (Lace Museum)</b>, <b>San Martino</b> + its leaning tower, the rainbow houses, <b>Buranelli</b> cookies.</div></div>
+    <h3>③ Return</h3>
+    <div class="step"><div class="num">7</div><div class="txt"><b>Line 12 from Burano</b> → <b>Fondamente Nove</b> (~45 min). Leave Burano by ~4:30–5 PM.</div></div>
+    <div class="callout sea"><b>Route in one line:</b> Fondamente Nove → <b>Murano Colonna</b> → (walk) <b>Murano Faro</b> → <b>Burano</b> → back to <b>Fondamente Nove</b>.</div>
+    <h2 class="sec" style="color:var(--rose)">Birthday evening</h2>
+    <ul class="tight">
+      <li><b>Sunset (~7:15 PM):</b> Skyline Rooftop Bar (Giudecca), a <b>sunset gondola</b>, or the Zattere / Accademia Bridge.</li>
+      <li><b>Dinner (~8 PM): La Zucca</b> — canal-side balcony, creative vegetarian (reserve the canal table). Alternatives: Ai Mercanti (vegan menu), Le Spighe.</li>
+      <li>Late regional train back to Mestre (they run past midnight).</li>
+    </ul>
+  </section>
+
+  <!-- MAP -->
+  <section class="panel" id="map" data-title="Map — every pin opens in Google Maps">
+    <h2 class="sec">Your pins</h2>
+    <div class="callout sea">On the go: tap any pin → it opens in <b>Google Maps</b> for live directions.</div>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Colosseum%20Rome"><span class="ic">🏛️</span><span class="meta"><span class="pn">Colosseum + Forum (Rome)</span><span class="ps">Sep 5 tour · free Sun Sep 6</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=St%20Peter's%20Basilica%20Vatican"><span class="ic">⛪</span><span class="meta"><span class="pn">Vatican</span><span class="ps">Sep 7 · Gardens AM · Basilica PM</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Grotta%20Giusti%20Monsummano%20Terme"><span class="ic">♨️</span><span class="meta"><span class="pn">Grotta Giusti (spa base)</span><span class="ps">Sep 8–11 · station: Montecatini Terme</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Cattedrale%20di%20Santa%20Maria%20del%20Fiore%20Florence"><span class="ic">⛪</span><span class="meta"><span class="pn">Florence Duomo</span><span class="ps">Sep 8 afternoon</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Leaning%20Tower%20of%20Pisa"><span class="ic">🗼</span><span class="meta"><span class="pn">Pisa — Leaning Tower</span><span class="ps">Sep 9 morning</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Lucca%20walls%20Tuscany"><span class="ic">🚲</span><span class="meta"><span class="pn">Lucca — walled town</span><span class="ps">Sep 9 afternoon · bike the walls</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Duomo%20di%20Milano"><span class="ic">⛪</span><span class="meta"><span class="pn">Milan Duomo + Galleria</span><span class="ps">Sep 11 · rooftop + shopping</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Santa%20Maria%20delle%20Grazie%20Milan"><span class="ic">🎨</span><span class="meta"><span class="pn">The Last Supper</span><span class="ps">Sep 12 · timed slot</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Quadrilatero%20della%20Moda%20Milan"><span class="ic">🛍️</span><span class="meta"><span class="pn">Quadrilatero della Moda</span><span class="ps">Sep 12 · fashion district</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Four%20Points%20by%20Sheraton%20Venice%20Mestre"><span class="ic">🛏️</span><span class="meta"><span class="pn">Four Points Venice Mestre</span><span class="ps">Sep 13–15 · 12-min train to island</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Piazza%20San%20Marco%20Venice"><span class="ic">🦁</span><span class="meta"><span class="pn">Piazza San Marco</span><span class="ps">Sep 13 PM</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Fondamente%20Nove%20Venice"><span class="ic">⛴️</span><span class="meta"><span class="pn">Fondamente Nove (waterbus)</span><span class="ps">Sep 14 · Line 12 to the islands</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Fondamenta%20dei%20Vetrai%20Murano"><span class="ic">🔥</span><span class="meta"><span class="pn">Murano — glassblowing</span><span class="ps">Sep 14</span></span><span class="go">›</span></a>
+    <a class="pin" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Piazza%20Galuppi%20Burano"><span class="ic">🧵</span><span class="meta"><span class="pn">Burano — lace + houses</span><span class="ps">Sep 14</span></span><span class="go">›</span></a>
+    <a class="pin bd" target="_blank" href="https://www.google.com/maps/search/?api=1&query=La%20Zucca%20restaurant%20Venice"><span class="ic">🎂</span><span class="meta"><span class="pn">La Zucca (birthday dinner)</span><span class="ps">Reserve ahead</span></span><span class="go">›</span></a>
+  </section>
+
+  <!-- STAY -->
+  <section class="panel" id="stay" data-title="Where you sleep">
+    <h2 class="sec">Where you sleep — 7 nights on points</h2>
+    <table>
+      <tr><th>Stop</th><th>Nights</th><th>Property</th><th class="r">Status</th></tr>
+      <tr><td>Rome</td><td>3</td><td>Central <b>cash</b> B&amp;B (Prati / centro)</td><td class="r">to book</td></tr>
+      <tr><td>Tuscany</td><td>3</td><td><b>Grotta Giusti Thermal Spa</b> (Autograph)</td><td class="r">✓ 152k pts</td></tr>
+      <tr><td>Milan</td><td>2</td><td><b>AC Hotel Milano</b></td><td class="r">points · to book</td></tr>
+      <tr><td>Venice</td><td>2</td><td><b>Four Points by Sheraton Venice Mestre</b> ✔ your pick</td><td class="r">points · to book</td></tr>
+    </table>
+    <div class="callout"><b>Points math:</b> Grotta Giusti took <b>152k</b>. AC Milano (~35–45k/nt) + Four Points Mestre (~30–40k/nt) ≈ <b>130–170k more</b>. If you started near ~275k, the remaining ~123k may fall a bit short — options: <b>Cash + Points</b> on one hotel, buying a small top-up, or paying one night cash. <i>Check your live balance and the award rates on your dates, and tell me what you see — I'll adjust.</i></div>
+    <div class="callout sea"><b>Mestre logistics:</b> the hotel is near Mestre station — <b>trains to Venezia S. Lucia every few minutes, ~12 min, ~€1.55 pp</b>; last trains run past midnight (fine after the birthday dinner). On departure day VCE is ~15 min away.</div>
+  </section>
+
+  <!-- FOOD -->
+  <section class="panel" id="food" data-title="Eating vegetarian">
+    <h2 class="sec">Eating vegetarian (no fish/meat/eggs · dairy OK)</h2>
+    <p style="margin:0 0 6px;font-weight:600">Seek</p>
+    <div class="dishes"><span>cacio e pepe</span><span>pici al pomodoro</span><span>risotto alla milanese (veg)</span><span>pizza margherita</span><span>melanzane</span><span>ribollita</span><span>cicchetti (veg/cheese)</span><span>gelato</span></div>
+    <p style="margin:10px 0 6px;font-weight:600">Ask / avoid</p>
+    <div class="dishes avoid"><span>carbonara / amatriciana</span><span>fresh egg pasta — "senza uovo?"</span><span>tiramisù (raw egg)</span><span>"pesce/tonno" in Venice</span></div>
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card"><h3>Rome</h3><ul class="tight"><li>Tonnarello &amp; Nannarella · Aromaticus (vegan)</li></ul></div>
+      <div class="card"><h3>Florence / Lucca</h3><ul class="tight"><li>Il Vegetariano · ORA · Lucca old-town trattorias</li></ul></div>
+      <div class="card"><h3>At the resort</h3><ul class="tight"><li>Il Poeta + the pool bar</li></ul></div>
+      <div class="card"><h3>Milan</h3><ul class="tight"><li>Strong vegan scene · Navigli aperitivo</li></ul></div>
+      <div class="card"><h3>Venice 🎂</h3><ul class="tight"><li><b>La Zucca</b> (birthday) · Ai Mercanti · Le Spighe</li></ul></div>
+      <div class="card"><h3>Good to know</h3><ul class="tight"><li>Reserve dinners; skip dining on Piazza San Marco.</li></ul></div>
+    </div>
+  </section>
+
+  <!-- TRAVEL -->
+  <section class="panel" id="travel" data-title="Flights & getting around">
+    <h2 class="sec">Flights (booked · Air Transat)</h2>
+    <table>
+      <tr><th>Leg</th><th>Date &amp; time</th><th>Flight</th></tr>
+      <tr><td>Toronto (YYZ T3) → Rome (FCO T3)</td><td>Fri Sep 4, 21:40 → Sat Sep 5, 12:15 · nonstop</td><td>TS 308 · A330-300</td></tr>
+      <tr><td>Venice (VCE) → Toronto (YYZ T3)</td><td>Tue Sep 15, 13:25 → 16:45 · nonstop</td><td>TS 307 · A332</td></tr>
+    </table>
+    <p class="hint" style="margin-top:8px">Economy (Eco Standard), two passengers. <b>Total paid: CAD $2,205.68</b> (fare $398 + carrier surcharges $1,560 + taxes/fees $247.68).</p>
+    <div class="callout">Your <b>50k Amex MR</b> can usually be applied as a ~$500 travel statement credit against this purchase.</div>
+    <h2 class="sec">Getting around (all train + boat)</h2>
+    <table>
+      <tr><th>Leg</th><th>How</th><th class="r">Time</th></tr>
+      <tr><td>FCO → Rome centre</td><td>Leonardo Express → Termini</td><td class="r">32 min</td></tr>
+      <tr><td>Rome → Florence</td><td>Frecciarossa / Italo</td><td class="r">~1h30</td></tr>
+      <tr><td>Florence ↔ Montecatini (spa)</td><td>Regional + shuttle/taxi (4 km)</td><td class="r">~50 min</td></tr>
+      <tr><td>Spa ↔ Pisa / Lucca</td><td>Regional from Montecatini</td><td class="r">~1h / ~35m</td></tr>
+      <tr><td>Tuscany → Milan</td><td>Regional to Florence + Frecciarossa</td><td class="r">~3h</td></tr>
+      <tr><td>Milan → Venezia Mestre</td><td>Frecciarossa</td><td class="r">~2h</td></tr>
+      <tr><td>Mestre ↔ Venice island</td><td>Regional train, every few min</td><td class="r">12 min · ~€1.55</td></tr>
+      <tr><td>Venice islands</td><td>Vaporetto Line 12 (€25 day pass)</td><td class="r">see Venice Day</td></tr>
+      <tr><td>Mestre → VCE (Sep 15)</td><td>ATVO/ACTV bus or taxi</td><td class="r">~15 min</td></tr>
+    </table>
+    <div class="callout sea"><b>No car, no ZTL, no IDP</b> — the whole trip runs on rails and water. <b>Pre-book:</b> trains, Vatican, Uffizi/Accademia, the Last Supper, St Mark's + Doge's Palace, La Zucca.</div>
+  </section>
+
+  <!-- BUDGET -->
+  <section class="panel" id="budget" data-title="Budget (CAD, two people)">
+    <h2 class="sec">Budget — 10 nights, two people (CAD)</h2>
+    <p class="hint">Venice back on points (Four Points Mestre) — this is the leanest version of the plan.</p>
+    <table>
+      <tr><th>Category</th><th class="r">Amount</th></tr>
+      <tr><td>Flights — Air Transat (booked, actual)</td><td class="r">$2,205.68</td></tr>
+      <tr><td>Hotels on points — spa (✓152k) + Milan + Venice Mestre</td><td class="r">$0 cash*</td></tr>
+      <tr><td>Rome — central cash B&amp;B (3 nts)</td><td class="r">$600</td></tr>
+      <tr><td>Trains (3 intercity + Tuscany day trips + Mestre hops)</td><td class="r">$320</td></tr>
+      <tr><td>Leonardo Express + vaporetto passes + VCE transfer</td><td class="r">$200</td></tr>
+      <tr><td>Tours &amp; experiences (Colosseum ✓, Vatican, Last Supper, spa treatments, glass)</td><td class="r">$650–850</td></tr>
+      <tr><td>Food (10 days, incl. birthday dinner)</td><td class="r">$1,400–1,550</td></tr>
+      <tr><td>Attractions (Pisa, Duomo rooftop, Doge's Palace, museums)</td><td class="r">$300–400</td></tr>
+      <tr><td>Shopping + buffer (Florence leather, Milan fashion, Murano glass, Burano lace)</td><td class="r">$500–700</td></tr>
+      <tr class="total"><td>Total</td><td class="r">~$5,800–6,300</td></tr>
+    </table>
+    <div class="callout">*If your Bonvoy balance can't fully cover Milan + Mestre, expect roughly <b>+$150–450</b> (Cash+Points or one cash night). <b>Levers down:</b> apply 50k Amex MR to the flight (−$500), picnic lunches, skip the Pisa climb.</div>
+  </section>
+
+  <footer>
+    Live trip guide · flights + Grotta Giusti booked · Rome → Tuscany spa → Milan → Venice (Four Points Mestre). Photos load from the web (Google Maps contributors) — if you're offline they hide gracefully and the guide still works; use ⬇ Export PDF for a full offline copy. Prices, points and times are researched estimates — confirm at booking.
+  </footer>
+</div>
+
+<button class="fab" id="fab" onclick="goToday()">📍 Today</button>
+
+<script>
+  // Tabs
+  const tabs=[...document.querySelectorAll('.tab')];
+  const panels=[...document.querySelectorAll('.panel')];
+  function showTab(id){
+    tabs.forEach(x=>x.setAttribute('aria-selected',x.dataset.t===id?'true':'false'));
+    panels.forEach(p=>p.classList.toggle('active',p.id===id));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.t)));
+
+  // Booking progress + filter
+  const items=[...document.querySelectorAll('.bitem')];
+  const done=items.filter(i=>i.dataset.s==='done').length;
+  document.getElementById('progfill').style.width=Math.round(done/items.length*100)+'%';
+  document.getElementById('progtext').textContent=done+' of '+items.length+' booked';
+  const fbtns=[...document.querySelectorAll('.fbtn')];
+  fbtns.forEach(b=>b.addEventListener('click',()=>{
+    fbtns.forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    const f=b.dataset.f;
+    items.forEach(i=>{const s=i.dataset.s;i.style.display=(f==='all'||(f==='done'&&s==='done')||(f==='todo'&&s!=='done'))?'flex':'none';});
+    document.querySelectorAll('.bgroup').forEach(g=>{g.style.display=[...g.querySelectorAll('.bitem')].some(i=>i.style.display!=='none')?'block':'none';});
+  }));
+
+  // Day quick-nav + TODAY detection
+  const days=[...document.querySelectorAll('.day[data-date]')];
+  const nav=document.getElementById('daynav');
+  const todayStr=new Date().toISOString().slice(0,10);
+  let todayId=null;
+  days.forEach(d=>{
+    const date=d.dataset.date;
+    const isToday=date===todayStr;
+    if(isToday){d.classList.add('today');todayId=d.id;}
+    const chip=document.createElement('button');
+    chip.className='dn-chip'+(isToday?' today':'');
+    chip.textContent='Sep '+parseInt(date.slice(8),10)+(isToday?' · today':'');
+    chip.onclick=()=>{showTab('itinerary');setTimeout(()=>d.scrollIntoView({behavior:'smooth',block:'start'}),150);};
+    nav.appendChild(chip);
+  });
+  if(todayId){
+    document.getElementById('todayBtn').style.display='inline-block';
+    document.getElementById('fab').style.display='block';
+  }
+  function goToday(){
+    if(!todayId)return;
+    showTab('itinerary');
+    setTimeout(()=>document.getElementById(todayId).scrollIntoView({behavior:'smooth',block:'start'}),150);
+  }
+
+  // PDF export: open every panel in print layout, then print (Save as PDF)
+  function exportPDF(){window.print();}
+</script>
+</body>
+</html>
